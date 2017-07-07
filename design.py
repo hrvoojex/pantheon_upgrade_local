@@ -15,7 +15,7 @@ class Ui_Dialog(object):
         self.groupBox = QtWidgets.QGroupBox(Dialog)
         self.groupBox.setGeometry(QtCore.QRect(10, 10, 381, 131))
         self.groupBox.setObjectName("groupBox")
-        self.lineEdit = QtWidgets.QLineEdit(self.groupBox)
+        self.lineEdit = ClickableLineEdit(self.groupBox)  # My subclassed
         self.lineEdit.setGeometry(QtCore.QRect(140, 30, 231, 31))
         self.lineEdit.setObjectName("lineEdit")
         self.pushButton = QtWidgets.QPushButton(self.groupBox)
@@ -44,3 +44,13 @@ class Ui_Dialog(object):
         self.groupBox_2.setTitle(_translate("Dialog", "Status"))
         self.label_3.setText(_translate("Dialog", "TextLabel"))
 
+
+class ClickableLineEdit(QtWidgets.QLineEdit):
+    """Subclassing QLineEdit class to make it clickable."""
+    clicked = QtCore.pyqtSignal()  # signal when the text entry is left clicked
+
+    def mousePressEvent(self, event):
+        if event.button() == QtCore.Qt.LeftButton:
+            self.clicked.emit()
+        else:
+            super().mousePressEvent(event)

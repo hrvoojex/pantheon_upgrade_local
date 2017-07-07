@@ -18,11 +18,13 @@
 # Ovdje je objašnjeno --> url: https://pymotw.com/2/platform/
 """
 
-from design import *
+
+from design import Ui_Dialog  # import from my 'design.py' module
 import os.path
 import platform
 import sys
 from shutil import copy
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Main(QtWidgets.QWidget):
@@ -31,26 +33,12 @@ class Main(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        self.initUi()
+        self.ui =Ui_Dialog()
+        self.ui.setupUi(self)
 
-    def initUi(self):
-        """Initialize the UI of the main widget."""
-        self.mySourceLabel = QLabel("Select your file:")
-        self.mySourceLine = ClickableLineEdit()
-        self.mySourceLine.setPlaceholderText("File name here")
-        self.myUpgradeButton = QPushButton(text="Nadogradi")
-        self.myUpgradeButton.sizeHint()
-
-        # Set layout
-        grid = QGridLayout()
-        # grid.setSpacing(5)
-        grid.addWidget(self.mySourceLabel, 0, 0)
-        grid.addWidget(self.mySourceLine, 0, 1)
-        grid.addWidget(self.myUpgradeButton, 1,1)
-        self.setLayout(grid)
 
         # call a method 'selectfile_Dialog' if ClickedLineEdit object is clicked
-        self.mySourceLine.clicked.connect(self.selectfile_Dialog)
+        self.ui.lineEdit.clicked.connect(self.selectfile_Dialog)
 
     def selectfile_Dialog(self, event=None):
         """
@@ -64,9 +52,9 @@ class Main(QtWidgets.QWidget):
         # QFileDialog doesn't use native OS dialog like this one:
         # 'fname = QFileDialog.getOpenFileName(self, 'Open file', '/home')'
         # to remember last opening path
-        fname, _ = QFileDialog.getOpenFileName(
+        fname, _ = QtWidgets.QFileDialog.getOpenFileName(
             self, 'Open File', '', 'Binary executable (*)', None,
-            QFileDialog.DontUseNativeDialog)
+            QtWidgets.QFileDialog.DontUseNativeDialog)
         # sender is object that sends the signal
         sender = self.sender()
         # write selected file name into that QLineEdit widget 'lista_lineEdit'
@@ -102,19 +90,7 @@ class Main(QtWidgets.QWidget):
         print("Finished succesfully.")
 
 
-class ClickableLineEdit(QLineEdit):
-    """Subclassing QLineEdit class to make it clickable."""
-
-    clicked = QtCore.pyqtSignal()  # signal when the text entry is left clicked
-
-    def mousePressEvent(self, event):
-        if event.button() == QtCore.Qt.LeftButton:
-            self.clicked.emit()
-        else:
-            super().mousePressEvent(event)
-
-
-class MyApp(QMainWindow):
+class MyApp(QtWidgets.QMainWindow):
     """Main application class."""
 
     def __init__(self, parent=None):
@@ -125,8 +101,8 @@ class MyApp(QMainWindow):
     def initUi(self):
         """Initialize UI of an application."""
         # main window size, title
-        # self.setGeometry(400, 300, 400, 300)
-        # self.setWindowTitle("Pantheon version upgrade ")
+        self.setGeometry(400, 300, 400, 250)
+        self.setWindowTitle("Pantheon - nadogradnja verzije ")
 
         # Create central widget and set is as centra widget
         centralWidget = Main(self)
@@ -134,7 +110,7 @@ class MyApp(QMainWindow):
 
 
 def main():
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     instance = MyApp()
     instance.show()
     sys.exit(app.exec())
