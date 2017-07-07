@@ -1,30 +1,30 @@
 #!/usr/bin/env python3
-# coding: utf-8 -*-
 
+# coding: utf-8 -*-
 """ Automatska nadogradnja Pantheona za neposlušne.
 
-# Windows:
-# platform.win32_ver() --> ('XP', '5.1.2600', 'SP3', 'Multiprocessor Free')
-# uname_result(system='Windows', node='DOMAGOJ-STROJ', release='XP', version='5.1.
-# 2600', machine='x86', processor='x86 Family 6 Model 42 Stepping 7, GenuineIntel')
-# Ako je procesor 64-bitni, onda je 'processor=AMD64'
-#
-# Linux:
-# uname_result(system='Linux', node='probook6470b', release='4.10.0-24-generic',
-# version='#28-Ubuntu SMP Wed Jun 14 08:14:34 UTC 2017', machine='x86_64',
-# processor='x86_64')
-# Ako je procesor 32-bitni onda je 'processor=i686'
-#
-# Ovdje je objašnjeno --> url: https://pymotw.com/2/platform/
+Windows:
+platform.win32_ver() --> ('XP', '5.1.2600', 'SP3', 'Multiprocessor Free')
+uname_result(system='Windows', node='DOMAGOJ-STROJ', release='XP',
+version='5.1.2600', machine='x86', processor='x86 Family 6 Model 42 Stepping 7,
+GenuineIntel')
+Ako je procesor 64-bitni, onda je 'processor=AMD64'
+
+Linux:
+uname_result(system='Linux', node='probook6470b', release='4.10.0-24-generic',
+version='#28-Ubuntu SMP Wed Jun 14 08:14:34 UTC 2017', machine='x86_64',
+processor='x86_64')
+Ako je procesor 32-bitni onda je 'processor=i686'
+
+Ovdje je objašnjeno --> url: https://pymotw.com/2/platform/
 """
 
-
-from design import Ui_Dialog  # import from my 'design.py' module
 import os.path
 import platform
 import sys
 from shutil import copy
 from PyQt5 import QtCore, QtGui, QtWidgets
+from design import Ui_Dialog  # import from my 'design.py' module
 
 
 class Main(QtWidgets.QWidget):
@@ -33,12 +33,13 @@ class Main(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        self.ui =Ui_Dialog()
+        self.ui = Ui_Dialog()
         self.ui.setupUi(self)
 
-
-        # call a method 'selectfile_Dialog' if ClickedLineEdit object is clicked
+        # call 'selectfile_Dialog' method  if ClickedLineEdit object is clicked
         self.ui.lineEdit.clicked.connect(self.selectfile_Dialog)
+        # call 'pushButtonAction' method when 'pushButton' is pressed
+        self.ui.pushButton.clicked.connect(self.pushButtonAction)
 
     def selectfile_Dialog(self, event=None):
         """
@@ -86,8 +87,13 @@ class Main(QtWidgets.QWidget):
 
     def saving(self):
         my_pantheon_path = self.where_to_save()
-        copy('Pantheon.exe', my_pantheon_path)
+        copy(self.ui.lineEdit.text(), my_pantheon_path)
         print("Finished succesfully.")
+
+    def pushButtonAction(self):
+        """Press the left click on pushButton."""
+        self.where_to_save()
+        self.saving()
 
 
 class MyApp(QtWidgets.QMainWindow):
