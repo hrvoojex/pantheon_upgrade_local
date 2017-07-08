@@ -54,7 +54,7 @@ class Main(QtWidgets.QWidget):
         # 'fname = QFileDialog.getOpenFileName(self, 'Open file', '/home')'
         # to remember last opening path
         fname, _ = QtWidgets.QFileDialog.getOpenFileName(
-            self, 'Open File', '', 'Binary executable (*)', None,
+            self, 'Open File', '', 'Binary executable (*.exe)', None,
             QtWidgets.QFileDialog.DontUseNativeDialog)
         # sender is object that sends the signal
         sender = self.sender()
