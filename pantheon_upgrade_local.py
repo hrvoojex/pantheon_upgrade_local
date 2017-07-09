@@ -36,6 +36,10 @@ class Main(QtWidgets.QWidget):
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
 
+        # Write a system info in label_3
+        self.ui.label_3.setText(
+            platform.system() + ' ' + platform.release() + '\n'
+            + platform.version() + ' ' + platform.machine())
         # call 'selectfile_Dialog' method  if ClickedLineEdit object is clicked
         self.ui.lineEdit.clicked.connect(self.selectfile_Dialog)
         # call 'pushButtonAction' method when 'pushButton' is pressed
@@ -68,8 +72,8 @@ class Main(QtWidgets.QWidget):
             platform.version(), platform.machine())
 
         # Asign a path based on a CPU arch
-        my_x86_path = "C:/Program Files/DataLab/"
-        my_x64_path = "C:/Program Files (x86)/DataLab/"
+        my_x86_path = "C:/Program Files/DataLab/Pantheon.exe"
+        my_x64_path = "C:/Program Files (x86)/DataLab/Pantheon.exe"
 
         if platform.machine() == "x86" or platform.machine() == "i686":
             my_pantheon_path = my_x86_path
@@ -79,9 +83,6 @@ class Main(QtWidgets.QWidget):
             my_pantheon_path = "Unknown"
             print("No CPU architecture detected...quiting")
             sys.exit()
-
-        print(my_os_version)
-        print(my_pantheon_path)
 
         return(my_pantheon_path)
 
