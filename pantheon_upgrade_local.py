@@ -26,6 +26,7 @@ from PyQt5 import QtWidgets
 from design2 import Ui_Dialog  # import from my 'design2.py' module
 from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QDesktopServices
+from PyQt5.QtGui import QIcon
 
 
 class Main(QtWidgets.QWidget):
@@ -120,10 +121,12 @@ class MyApp(QtWidgets.QMainWindow):
         # main window size, title
         self.setGeometry(400, 300, 400, 400)
         self.setWindowTitle("Pantheon - nadogradnja verzije ")
+        self.setWindowIcon(QIcon('pan_ico.png'))
 
         # Create central widget and set is as centra widget
         centralWidget = Main(self)
         self.setCentralWidget(centralWidget)
+
 
 
 def main():
