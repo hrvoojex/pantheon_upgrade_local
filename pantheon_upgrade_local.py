@@ -19,11 +19,10 @@ Ako je procesor 32-bitni onda je 'processor=i686'
 Ovdje je objašnjeno --> url: https://pymotw.com/2/platform/
 """
 
-import os.path
 import platform
 import sys
 from shutil import copy
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtWidgets
 from design import Ui_Dialog  # import from my 'design.py' module
 
 
@@ -95,6 +94,7 @@ class Main(QtWidgets.QWidget):
         """Press the left click on pushButton."""
         self.where_to_save()
         self.saving()
+        self.ui.label_3.setText("Kopiranje završeno uspješno!")
 
 
 class MyApp(QtWidgets.QMainWindow):
@@ -108,7 +108,7 @@ class MyApp(QtWidgets.QMainWindow):
     def initUi(self):
         """Initialize UI of an application."""
         # main window size, title
-        self.setGeometry(400, 300, 400, 250)
+        self.setGeometry(400, 300, 400, 300)
         self.setWindowTitle("Pantheon - nadogradnja verzije ")
 
         # Create central widget and set is as centra widget

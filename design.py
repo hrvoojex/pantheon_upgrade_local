@@ -6,7 +6,7 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -25,10 +25,10 @@ class Ui_Dialog(object):
         self.label.setGeometry(QtCore.QRect(10, 40, 121, 21))
         self.label.setObjectName("label")
         self.groupBox_2 = QtWidgets.QGroupBox(Dialog)
-        self.groupBox_2.setGeometry(QtCore.QRect(10, 160, 381, 71))
+        self.groupBox_2.setGeometry(QtCore.QRect(10, 160, 381, 110))
         self.groupBox_2.setObjectName("groupBox_2")
         self.label_3 = QtWidgets.QLabel(self.groupBox_2)
-        self.label_3.setGeometry(QtCore.QRect(20, 30, 341, 31))
+        self.label_3.setGeometry(QtCore.QRect(20, 30, 341, 81))
         self.label_3.setObjectName("label_3")
 
         self.retranslateUi(Dialog)
