@@ -23,7 +23,7 @@ import platform
 import sys
 from shutil import copy
 from PyQt5 import QtWidgets
-from design import Ui_Dialog  # import from my 'design.py' module
+from design2 import Ui_Dialog  # import from my 'design2.py' module
 from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QDesktopServices
 
@@ -40,15 +40,15 @@ class Main(QtWidgets.QWidget):
         # Write a system info in label_3
         self.ui.label_3.setText(
             platform.system() + ' ' + platform.release() + '\n'
-            + platform.version() + ' ' + platform.machine())
+            + platform.version() + ' ' + '\n' + platform.machine())
         # call 'selectfile_Dialog' method  if ClickedLineEdit object is clicked
         self.ui.lineEdit.clicked.connect(self.selectfile_Dialog)
         # call 'pushButtonAction' method when 'pushButton' is pressed
         self.ui.pushButton.clicked.connect(self.pushButtonAction)
         # Open a link in a default browser
-        self.ui.label_3.linkActivated.connect(self.link)
-        self.ui.label_3.setText(
-            '<a href="https://drive.google.com/a/borovo.hr/uc?id=0B_fNrhELg9mKR2lTS3BYekVveGM&export=download">Google Drive Pantheon.exe download</a>')
+        self.ui.label_2.linkActivated.connect(self.link)
+        self.ui.label_2.setText(
+            '<a href="https://drive.google.com/a/borovo.hr/uc?id=0B_fNrhELg9mKR2lTS3BYekVveGM&export=download">Download link - Pantheon.exe</a>')
 
     def link(self, linkStr):
 
@@ -118,7 +118,7 @@ class MyApp(QtWidgets.QMainWindow):
     def initUi(self):
         """Initialize UI of an application."""
         # main window size, title
-        self.setGeometry(400, 300, 400, 300)
+        self.setGeometry(400, 300, 400, 400)
         self.setWindowTitle("Pantheon - nadogradnja verzije ")
 
         # Create central widget and set is as centra widget
