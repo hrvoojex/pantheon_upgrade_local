@@ -132,9 +132,7 @@ class About(QtWidgets.QWidget):
 
         #aboutWidget = QtWidgets.QWidget()
         aboutLabel = QtWidgets.QLabel(self)
-        aboutLabel.setText("Autor: Hrvoje T.\n"
-                           "Datum: srpanj, 2017.\n"
-                           "Borovo d.d.")
+        aboutLabel.setText("Autor: Hrvoje T.\nDatum: srpanj, 2017.\n")
 
 
 class MyApp(QtWidgets.QMainWindow):
