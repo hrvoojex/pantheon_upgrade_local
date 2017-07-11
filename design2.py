@@ -6,8 +6,7 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt5 import QtCore, QtWidgets
-
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -16,7 +15,7 @@ class Ui_Dialog(object):
         self.groupBox = QtWidgets.QGroupBox(Dialog)
         self.groupBox.setGeometry(QtCore.QRect(10, 110, 381, 131))
         self.groupBox.setObjectName("groupBox")
-        self.lineEdit = ClickableLineEdit(self.groupBox)  # My subclass
+        self.lineEdit = QtWidgets.QLineEdit(self.groupBox)
         self.lineEdit.setGeometry(QtCore.QRect(140, 30, 231, 31))
         self.lineEdit.setObjectName("lineEdit")
         self.pushButton = QtWidgets.QPushButton(self.groupBox)
@@ -45,7 +44,7 @@ class Ui_Dialog(object):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
         self.groupBox.setTitle(_translate("Dialog", "Biranje datoteke za nadogradnju"))
-        self.lineEdit.setPlaceholderText(_translate("Dialog", "Odaberi skinutu datoteku"))
+        self.lineEdit.setPlaceholderText(_translate("Dialog", "Klikni ovdje i odaberi datoteku"))
         self.pushButton.setText(_translate("Dialog", "Nadogradi"))
         self.label.setText(_translate("Dialog", "Odaberi datoteku:"))
         self.groupBox_2.setTitle(_translate("Dialog", "Status"))
@@ -53,13 +52,3 @@ class Ui_Dialog(object):
         self.groupBox_3.setTitle(_translate("Dialog", "Dohvaćanje datoteke Pantheon.exe"))
         self.label_2.setText(_translate("Dialog", "TextLabel"))
 
-
-class ClickableLineEdit(QtWidgets.QLineEdit):
-    """Subclassing QLineEdit class to make it clickable."""
-    clicked = QtCore.pyqtSignal()  # signal when the text entry is left clicked
-
-    def mousePressEvent(self, event):
-        if event.button() == QtCore.Qt.LeftButton:
-            self.clicked.emit()
-        else:
-            super().mousePressEvent(event)

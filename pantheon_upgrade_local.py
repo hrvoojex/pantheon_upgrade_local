@@ -22,7 +22,7 @@ Ovdje je objašnjeno --> url: https://pymotw.com/2/platform/
 import platform
 import sys
 from shutil import copy
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 from design2 import Ui_Dialog  # import from my 'design2.py' module
 from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QDesktopServices
@@ -37,6 +37,11 @@ class Main(QtWidgets.QWidget):
 
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
+
+        # Local changes of design2.py file
+        self.ui.lineEdit = ClickableLineEdit(self.ui.groupBox)
+        self.ui.lineEdit.setGeometry(QtCore.QRect(140, 30, 231, 31))
+        self.ui.lineEdit.setObjectName("lineEdit")
 
         # Write a system info in label_3
         self.ui.label_3.setText(
@@ -106,6 +111,17 @@ class Main(QtWidgets.QWidget):
         self.where_to_save()
         self.saving()
         self.ui.label_3.setText("Kopiranje završeno uspješno!")
+
+
+class ClickableLineEdit(QtWidgets.QLineEdit):
+    """Subclassing QLineEdit class to make it clickable."""
+    clicked = QtCore.pyqtSignal()  # signal when the text entry is left clicked
+
+    def mousePressEvent(self, event):
+        if event.button() == QtCore.Qt.LeftButton:
+            self.clicked.emit()
+        else:
+            super().mousePressEvent(event)
 
 
 class MyApp(QtWidgets.QMainWindow):
