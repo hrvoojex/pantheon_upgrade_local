@@ -124,6 +124,19 @@ class ClickableLineEdit(QtWidgets.QLineEdit):
             super().mousePressEvent(event)
 
 
+class About(QtWidgets.QWidget):
+    """Widget for about information"""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+        #aboutWidget = QtWidgets.QWidget()
+        aboutLabel = QtWidgets.QLabel(self)
+        aboutLabel.setText("Autor: Hrvoje T.\n"
+                           "Datum: srpanj, 2017.\n"
+                           "Borovo d.d.")
+
+
 class MyApp(QtWidgets.QMainWindow):
     """Main application class."""
 
@@ -140,9 +153,43 @@ class MyApp(QtWidgets.QMainWindow):
         self.setWindowIcon(QIcon('pan_ico.png'))
 
         # Create central widget and set is as centra widget
-        centralWidget = Main(self)
-        self.setCentralWidget(centralWidget)
+        self.centralWidget = Main(self)
+        self.setCentralWidget(self.centralWidget)
 
+        # Create menubar with actions
+        exitAction = QtWidgets.QAction(QIcon('exit.png'), '&Exit', self)
+        exitAction.setShortcut('Ctrl+Q')
+        exitAction.setStatusTip('Zatvori aplikaciju')
+        exitAction.triggered.connect(QtWidgets.qApp.quit)
+
+        aboutAction = QtWidgets.QAction(QIcon('about.png'), 'About', self)
+        aboutAction.setShortcut('Ctrl+B')
+        aboutAction.setStatusTip('O aplikaciji')
+        aboutAction.triggered.connect(self.showAbout)
+
+        programAction = QtWidgets.QAction(QIcon('program.png'), 'Program', self)
+        programAction.setShortcut('Ctrl+P')
+        programAction.setStatusTip('Pokreni program')
+        programAction.triggered.connect(self.showMain)
+
+        menubar = self.menuBar()
+        fileMenu = menubar.addMenu('&File')
+        fileMenu.addAction(programAction)
+        fileMenu.addAction(exitAction)
+        aboutMenu = menubar.addMenu('&About')
+        aboutMenu.addAction(aboutAction)
+
+    def showAbout(self):
+        """Show the About widget"""
+        self.about = About(self)
+        self.about.show()
+        self.setCentralWidget(self.about)
+
+
+    def showMain(self):
+        """Hide the About widget"""
+        self.centralWidget = Main(self)
+        self.setCentralWidget(self.centralWidget)
 
 
 def main():

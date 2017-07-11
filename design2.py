@@ -12,6 +12,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(401, 384)
+        Dialog.setMinimumSize(QtCore.QSize(401, 384))
         self.groupBox = QtWidgets.QGroupBox(Dialog)
         self.groupBox.setGeometry(QtCore.QRect(10, 110, 381, 131))
         self.groupBox.setObjectName("groupBox")
