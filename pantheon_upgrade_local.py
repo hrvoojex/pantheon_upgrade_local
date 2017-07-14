@@ -54,7 +54,8 @@ class Main(QtWidgets.QWidget):
         # Open a link in a default browser
         self.ui.label_2.linkActivated.connect(self.link)
         self.ui.label_2.setText(
-            '<a href="https://drive.google.com/a/borovo.hr/uc?id=0B_fNrhELg9mKR2lTS3BYekVveGM&export=download">Download link - Pantheon.exe</a>')
+            #'<a href="https://drive.google.com/a/borovo.hr/uc?id=0B_fNrhELg9mKR2lTS3BYekVveGM&export=download">Download link - Pantheon.exe</a>')
+            '<a href="https://drive.google.com/drive/folders/0B_fNrhELg9mKSnFyU0JIQVNqZmc">Download link - Pantheon.exe</a>')
 
     def link(self, linkStr):
 
@@ -73,8 +74,7 @@ class Main(QtWidgets.QWidget):
         # 'fname = QFileDialog.getOpenFileName(self, 'Open file', '/home')'
         # to remember last opening path
         fname, _ = QtWidgets.QFileDialog.getOpenFileName(
-            self, 'Open File', '', 'Binary executable (*.exe)', None,
-            QtWidgets.QFileDialog.DontUseNativeDialog)
+            self, 'Open File', '', 'Binary executable (*.exe)', None)
         # sender is object that sends the signal
         sender = self.sender()
         # write selected file name into that QLineEdit widget 'lista_lineEdit'
