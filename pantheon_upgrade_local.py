@@ -54,7 +54,6 @@ class Main(QtWidgets.QWidget):
         # Open a link in a default browser
         self.ui.label_2.linkActivated.connect(self.link)
         self.ui.label_2.setText(
-            #'<a href="https://drive.google.com/a/borovo.hr/uc?id=0B_fNrhELg9mKR2lTS3BYekVveGM&export=download">Download link - Pantheon.exe</a>')
             '<a href="https://drive.google.com/drive/folders/0B_fNrhELg9mKSnFyU0JIQVNqZmc">Download link - Pantheon.exe</a>')
 
     def link(self, linkStr):
