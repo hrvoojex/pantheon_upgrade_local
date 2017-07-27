@@ -145,7 +145,7 @@ class MyApp(QtWidgets.QMainWindow):
     def initUi(self):
         """Initialize UI of an application."""
         # main window size, title
-        self.setGeometry(400, 300, 400, 400)
+        self.setGeometry(400, 300, 400, 525)
         self.setWindowTitle("Pantheon - nadogradnja verzije ")
         self.setWindowIcon(QIcon('pan_ico.png'))
 
