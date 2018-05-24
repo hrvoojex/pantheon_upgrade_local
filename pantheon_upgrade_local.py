@@ -21,14 +21,22 @@ Ovdje je objašnjeno --> url: https://pymotw.com/2/platform/
 
 import sys, os, platform
 from PyQt5 import QtWidgets, QtCore, QtGui
-from design2 import Ui_Dialog  # import from my 'design2.py' module
+#from design2 import Ui_Dialog  # import from my 'design2.py' module
+from untitled2 import Ui_Dialog
+import webbrowser
+import ctypes
+
+
+def is_admin():
+    try:
+        return ctypes.windll.shell32.IsUserAnAdmin()
+    except:
+        return False
 
 
 class Main(QtWidgets.QWidget):
     """The main widget with label and LineEdit."""
 
-    # Create a signal
-    #copied_percent_signal = QtCore.pyqtSignal(int)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -38,8 +46,15 @@ class Main(QtWidgets.QWidget):
 
         # Local changes of design2.py file
         self.ui.lineEdit = ClickableLineEdit(self.ui.groupBox)
-        self.ui.lineEdit.setGeometry(QtCore.QRect(140, 30, 231, 31))
+        self.ui.lineEdit.setGeometry(QtCore.QRect(10, 30, 361, 31))
+        font = QtGui.QFont()
+        font.setPointSize(8)
+        self.ui.lineEdit.setFont(font)
         self.ui.lineEdit.setObjectName("lineEdit")
+        self.ui.lineEdit.setPlaceholderText("Klikni ovdje i odaberi upravo preuzetu datoteku Pantheon.exe")
+
+        self.ui.lineEdit_2.setText("https://drive.google.com/drive/u/1/folders/"
+                                   "1mBCFTtC7G1H9iEb3d5DPEOW2F-FUSX78")
 
         # Write a system info in label_3
         self.ui.label_3.setText(
@@ -49,16 +64,21 @@ class Main(QtWidgets.QWidget):
         self.ui.lineEdit.clicked.connect(self.selectfile_Dialog)
         # call 'pushButtonAction' method when 'pushButton' is pressed
         self.ui.pushButton.clicked.connect(self.pushButtonAction)
+        self.ui.pushButton_2.clicked.connect(self.pushButton2Action)
+
         # Open a link in a default browser
-        self.ui.label_2.linkActivated.connect(self.link)
-        self.ui.label_2.setText(
-            '<a href="https://drive.google.com/drive/folders/'
-            '0B_fNrhELg9mKSnFyU0JIQVNqZmc">Download link - Pantheon.exe</a>')
-        self.ui.label_2.setAlignment(QtCore.Qt.AlignCenter)
+        # self.ui.label_2.linkActivated.connect(self.link)
+        # self.ui.line_2.setText(
+        #
+        #     '<a href="https://drive.google.com/drive/u/1/folders/'
+        #     #'0B_fNrhELg9mKSnFyU0JIQVNqZmc">Download link - Pantheon.exe</a>')  # Dankin Google Disk
+        #     # Moj disk, ne share link, nego baš link iz url-a foldera
+        #     '1mBCFTtC7G1H9iEb3d5DPEOW2F-FUSX78">Download link - Pantheon.exe</a>')
+
 
     def link(self, linkStr):
-
         QtGui.QDesktopServices.openUrl(QtCore.QUrl(linkStr))
+
 
     def selectfile_Dialog(self, event=None):
         """
@@ -80,6 +100,7 @@ class Main(QtWidgets.QWidget):
         sender.setText(fname)
         # set options for combobox only from 'lista_lineEdit' QLineEdit widget
 
+
     def where_to_save(self):
         my_os_version = (
             platform.system(), platform.release(), platform.win32_ver()[2],
@@ -100,6 +121,7 @@ class Main(QtWidgets.QWidget):
 
         return(my_pantheon_path)
 
+
     def pushButtonAction(self):
         """Press the left click on pushButton."""
         self.ui.pushButton.setDisabled(True)
@@ -111,14 +133,22 @@ class Main(QtWidgets.QWidget):
         print("Finished succesfully.")
         self.ui.label_3.setText("Nadogradna uspješno završena!")
 
+
+    def pushButton2Action(self):
+        """Press the left click on pushButton2."""
+        # Open a link in a default browser
+        webbrowser.open(self.ui.lineEdit_2.text())
+
     def on_count_change(self, value):
         self.ui.progressBar.setValue(value)
+
 
     def my_callback(self, temp_file_size):
         percent = int(temp_file_size/self.file_size*100)
         print("Copiedd: {}".format(percent))
         #self.copied_percent_signal.emit(percent)
         self.ui.progressBar.setValue(percent)
+
 
     def copyfileobj(self, fsrc, fdst, callback, length=16*1024):
         copied = 0
@@ -165,7 +195,7 @@ class MyApp(QtWidgets.QMainWindow):
     def initUi(self):
         """Initialize UI of an application."""
         # main window size, title
-        self.setGeometry(400, 300, 400, 525)
+        self.setGeometry(400, 300, 400, 575)
         self.setWindowTitle("Pantheon - nadogradnja verzije ")
         self.setWindowIcon(QtGui.QIcon('pan_ico.png'))
 
@@ -217,4 +247,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if is_admin():
+        main()
+    else:
+        # Re-run the program with admin rights
+        ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, sys.argv[0], None, 1)
+
